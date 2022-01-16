@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Btc Test</title>
+</head>
+<body>
+    <div id="app" v-bind:style="{ background: '#' + color }">
+        <img 
+            v-on:mouseover="toggleShowPrices"
+            v-on:mouseout="toggleShowPrices"
+            v-bind:src="img"
+            v-bind:alt="name"
+        > <!--v-bind is to find img in vue-->
+
+        <h1 
+            v-bind:class="changePercent > 0 ? 'green' : 'red'"><!--Change h1 color-->
+            {{title}}
+            <span v-if="changePercent > 0">👍</span> <!--Btc variation shows-->
+            <span v-else-if="changePercent < 0">🤢</span>
+            <span v-else>🤷‍♂️</span>
+
+            <!--Btc variation shows but if it's false don't delete the code
+            <span v-show="changePercent > 0">👍</span>
+            <span v-show="changePercent < 0">🤢</span>
+            <span v-show = "changePercent == 0">🤷‍♂️</span>-->
+            <span v-on:click="toggleShowPrices">{{ showPrices ? '😉' : '🤷‍♀️' }}</span>
+        </h1> <br><br>
+        <input type="number" v-model='valueC'><!--valueC is used to convert USD to BTC-->
+        <span>{{convertedValue}}</span>
+        
+        <ul v-show= showPrices >
+            <li 
+                v-for="(price) in pricesWithDays"
+                v-bind:key="price.day"
+                v-bind:class="{orange: price.value == currentPrice, red: price.value < currentPrice, green:price.value > currentPrice}"
+                class="uppercase"
+             >
+                {{price.day}} - {{price.value}}
+            </li>
+        </ul>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="./app.js"></script>
+</body>
+</html>
